@@ -1,0 +1,26 @@
+#!/bin/bash
+set -u
+
+module load intel-para
+module load SciPy-Stack
+
+
+rm Output/SPFixedMassFit*SpecSum.txt
+rm Output/FixedMassFit*SpecSum.txt
+rm Output/Results*_*
+set -e
+
+python3.5 -O ProcessFit_testing_v2.py
+
+cd Output
+
+cat Results* > Output.txt
+cat Results* >>OutputStore.txt
+cat FitResults* >FitOutput.txt
+cat FixedMassFitResults* >FixedMassFitOutput.txt
+cat SPFixedMassFitResults* >SPFixedMassFitOutput.txt
+
+
+
+cd ..
+
