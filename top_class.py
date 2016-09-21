@@ -130,8 +130,8 @@ class SpectralData:
 
 	def Set_M_sqr(self,M_sqr):
 		self.M_sqr=M_sqr
-		a=4 ####CHANGE
-		b=4
+		a=2 ####CHANGE
+		b=2
 		spectral_sum_a=0.0
 		spectral_sum_b=0.0
 		spectral_sum_a_list=[]
