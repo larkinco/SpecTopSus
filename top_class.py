@@ -6,7 +6,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import importlib
-
+import Cut_Off as ct
 
 class EigenProd:
 	def __init__(self, evls, product):
@@ -130,8 +130,8 @@ class SpectralData:
 
 	def Set_M_sqr(self,M_sqr):
 		self.M_sqr=M_sqr
-		a=2 ####CHANGE
-		b=2
+		a=4 ####CHANGE
+		b=4
 		spectral_sum_a=0.0
 		spectral_sum_b=0.0
 		spectral_sum_a_list=[]
@@ -149,8 +149,13 @@ class SpectralData:
 				if EigenProd.evls[j] < self.M_sqr:
 					Q+=EigenProd.product[j]
 					ModeNumber+=1
-				spectral_sum_a+=pow(self.TwoKappaMu,2.0*a)*EigenProd.product[j]*pow(EigenProd.evls[j],-1.0*a)
-				spectral_sum_b+=pow(self.TwoKappaMu,2.0*b)*EigenProd.product[j]*pow(EigenProd.evls[j],-1.0*b)
+				if ct.GLOBALMU:
+					latMU=ct.MU*self.Zp*self.a/197.32
+					spectral_sum_a+=pow(2*self.Kappa*latMU,2.0*a)*EigenProd.product[j]*pow(EigenProd.evls[j]-self.TwoKappaMu*self.TwoKappaMu +4*self.Kappa*self.Kappa*latMU*latMU,-1.0*a)
+					spectral_sum_b+=pow(2*self.Kappa*latMU,2.0*b)*EigenProd.product[j]*pow(EigenProd.evls[j]-self.TwoKappaMu*self.TwoKappaMu +4*self.Kappa*self.Kappa*latMU*latMU,-1.0*b)
+				else:
+					spectral_sum_a+=pow(self.TwoKappaMu,2.0*a)*EigenProd.product[j]*pow(EigenProd.evls[j],-1.0*a)
+					spectral_sum_b+=pow(self.TwoKappaMu,2.0*b)*EigenProd.product[j]*pow(EigenProd.evls[j],-1.0*b)
 			Q_list.append(Q)
 			Q=0.0
 			spectral_sum_a_list.append(spectral_sum_a)
